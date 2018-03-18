@@ -4,5 +4,9 @@
 
 ### Android
 
-* [CharSequence와 String의 차이](./20170915-difference-char-string)
-* [개선된 로딩 화면 (Splash Screen)](./20170409-improved-loading-screen)
+```
+POST LINK : SAMPLE PROJECT LINK
+```
+
+* [CharSequence와 String의 차이 (feat. StringSpannableBuilder)](http://dudmy.net/android/2017/09/15/difference-char-string/) : [Difference-Char-String-Sample](./Difference-Char-String-Sample)
+* [개선된 로딩 화면 (Splash Screen)](http://dudmy.net/android/2017/04/09/improved-loading-screen/) : [Improved-Loading-Screen-Sample](./Improved-Loading-Screen-Sample)
