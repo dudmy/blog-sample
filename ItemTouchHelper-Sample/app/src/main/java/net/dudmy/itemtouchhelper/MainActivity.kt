@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity(), ItemDragListener {
 
     private lateinit var mainAdapter: MainAdapter
 
+    private lateinit var itemTouchHelper: ItemTouchHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,29 +38,11 @@ class MainActivity : AppCompatActivity(), ItemDragListener {
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
+        itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(mainAdapter))
         itemTouchHelper.attachToRecyclerView(recycler_view)
     }
 
     override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
         itemTouchHelper.startDrag(viewHolder)
     }
-
-    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
-        override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
-            val dragFlags = ItemTouchHelper.DOWN or ItemTouchHelper.UP
-            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-            return makeMovementFlags(dragFlags, swipeFlags)
-        }
-
-        override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-            mainAdapter.onItemMoved(viewHolder!!.adapterPosition, target!!.adapterPosition)
-            return true
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-            mainAdapter.onItemSwiped(viewHolder!!.adapterPosition)
-        }
-
-        override fun isLongPressDragEnabled(): Boolean = false
-    })
 }

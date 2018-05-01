@@ -9,13 +9,13 @@ import kotlinx.android.synthetic.main.item_artist.view.*
 
 class MainAdapter(
         private val items: MutableList<Artist>,
-        private val itemDragListener: ItemDragListener
-) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+        private val listener: ItemDragListener
+) : RecyclerView.Adapter<MainAdapter.ViewHolder>(), ItemActionListener {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context)
                 .inflate(R.layout.item_artist, parent, false)
-        return ViewHolder(view, itemDragListener)
+        return ViewHolder(view, listener)
     }
 
     override fun getItemCount(): Int = items.size
@@ -24,7 +24,7 @@ class MainAdapter(
         holder?.bind(items[position])
     }
 
-    fun onItemMoved(from: Int, to: Int) {
+    override fun onItemMoved(from: Int, to: Int) {
         if (from == to) {
             return
         }
@@ -34,17 +34,17 @@ class MainAdapter(
         notifyItemMoved(from, to)
     }
 
-    fun onItemSwiped(position: Int) {
+    override fun onItemSwiped(position: Int) {
         items.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    class ViewHolder(itemView: View, itemDragListener: ItemDragListener) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, listener: ItemDragListener) : RecyclerView.ViewHolder(itemView) {
 
         init {
             itemView.drag_handle.setOnTouchListener { v, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
-                    itemDragListener.onStartDrag(this)
+                    listener.onStartDrag(this)
                 }
                 false
             }
